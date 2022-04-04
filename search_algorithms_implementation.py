@@ -69,3 +69,33 @@ def dfs_generic(graph,node):
                     to_be_visited.append(neighbour)
             visited.append(current_node)
     return visited
+
+def dijkstra(graph,start_node,end_node):
+    Infinity = float('inf')
+    result = {}
+    visited = []
+    nodes = dfs_generic(graph,start_node)
+    for nd in nodes:
+        result[nd]={'shortest_distance':Infinity, 'via':None}
+    result[start_node]['shortest_distance']=0
+    shortest_distance=Infinity
+    shortest=start_node
+    while(len(visited)<len(nodes)):
+        for nd in result.keys():
+            if((result[nd]['shortest_distance']<=shortest_distance) and (nd not in visited)):
+                shortest_distance=result[nd]['shortest_distance']
+                shortest=nd
+        for neighbour in graph.graph[shortest]['neighbours'].keys():
+            if(result[neighbour]['shortest_distance'] > graph.graph[shortest]['neighbours'][neighbour]+result[shortest]['shortest_distance']):
+                result[neighbour]['shortest_distance']=graph.graph[shortest]['neighbours'][neighbour]+result[shortest]['shortest_distance']
+                result[neighbour]['via']=shortest;
+        visited.append(shortest)
+        shortest_distance=Infinity
+    path=[]
+    path.append(end_node)
+    previous=result[end_node]['via']
+    while (previous != None):
+        path.append(previous)
+        previous=result[previous]['via']
+    path.reverse()
+    return path
