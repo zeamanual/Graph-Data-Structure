@@ -3,10 +3,8 @@ from graph_implemenation import Edge, Node,graph,city_cordinates
 import random
 import string
 
-
 Infinity=float('inf')
 def bfs(graph,start_node,end_node):
-
     visited=[]
     parent={}
     parent[start_node]=None
@@ -121,12 +119,10 @@ def a_star_search(graph,start,end,city_cordinates):
     infinity=float('inf')
     nodes=dfs_generic(graph,start)
     search_data ={}
-    
     if(end not in nodes):
         return []
     for node in nodes:
         search_data[node]={'F':infinity,'G':infinity,'from':None}
-
     search_data[start]['G']=0
     search_data[start]['F']=get_huristic_value(city_cordinates[start.node_identifier],city_cordinates[end.node_identifier])
     to_be_visited=[]
@@ -176,7 +172,7 @@ def add_random_node_to_graph(graph,size,existing_city_coordinates):
         node = Node(random_word)
         new_nodes.append(node)
 
-    #create random edge
+    #create random edge between nodes
     for i in range(len(new_nodes)):
         node1 = new_nodes[random.randint(0,len(new_nodes)-1)]
         if(len(graph.graph.keys())>10):
@@ -186,7 +182,7 @@ def add_random_node_to_graph(graph,size,existing_city_coordinates):
         edge = Edge(node1,node2)
         graph.add_edge(edge)
 
-    #create random coordinates
+    #create random city coordinates
     for i in new_nodes:
         latitude=(random.random() * 90)
         longitude=(random.random()*180)
